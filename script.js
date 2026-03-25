@@ -1,13 +1,14 @@
-// LOGIN (fake auth)
+// LOGIN (no validation)
 function login() {
   let user = document.getElementById("user").value;
+
   localStorage.setItem("user", user);
 
   document.getElementById("output").innerHTML =
     "Logged in as: " + user;
 }
 
-// SEARCH (DOM injection)
+// SEARCH (DOM XSS)
 function search() {
   let query = document.getElementById("search").value;
 
@@ -15,7 +16,7 @@ function search() {
     "Results for: " + query;
 }
 
-// LOAD USER
+// LOAD USER INFO
 if (document.getElementById("userInfo")) {
   document.getElementById("userInfo").innerHTML =
     "Current user: " + localStorage.getItem("user");
@@ -36,11 +37,23 @@ function saveConfig() {
   let config = document.getElementById("config").value;
 
   document.getElementById("output").innerHTML =
-    "Saved config: " + config;
+    "Saved: " + config;
 }
 
-// URL param reflection
-const params = new URLSearchParams(window.location.search);
-if (params.get("q")) {
-  document.body.innerHTML += "<p>Param: " + params.get("q") + "</p>";
+// DELETE USER (no validation)
+function deleteUser() {
+  let user = prompt("Enter username");
+
+  document.getElementById("output").innerHTML =
+    "Deleted: " + user;
 }
+
+// URL PARAM XSS
+const params = new URLSearchParams(window.location.search);
+
+params.forEach((value, key) => {
+  document.body.innerHTML += `<p>${key}: ${value}</p>`;
+});
+
+// HASH XSS
+document.body.innerHTML += location.hash;
