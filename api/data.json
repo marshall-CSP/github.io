@@ -1,0 +1,10 @@
+{
+  "users": [
+    { "username": "admin", "role": "admin" },
+    { "username": "guest", "role": "user" }
+  ],
+  "config": {
+    "debug": true,
+    "version": "1.0"
+  }
+}
