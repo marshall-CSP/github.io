@@ -1,14 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Test Vulnerability Site</title>
+  <meta charset="UTF-8">
+  <title>Vuln Test App</title>
+
+  <!-- Intentionally weak CSP -->
+  <meta http-equiv="Content-Security-Policy" content="">
+
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    input, textarea { display: block; margin: 10px 0; padding: 8px; width: 300px; }
+    button { padding: 10px; cursor: pointer; }
+    #output { margin-top: 20px; color: darkred; }
+  </style>
 </head>
+
 <body>
-  <h1>Hello Scanner 👋</h1>
-  <p>This is my test site for scanning.</p>
+  <h1>🔍 Vulnerability Test App</h1>
+
+  <!-- Login Form -->
+  <h2>Login</h2>
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+
+  <!-- Search -->
+  <h2>Search</h2>
+  <input type="text" id="search" placeholder="Search something">
+  <button onclick="search()">Search</button>
+
+  <!-- Comment box -->
+  <h2>Leave a Comment</h2>
+  <textarea id="comment"></textarea>
+  <button onclick="postComment()">Post</button>
+
+  <div id="output"></div>
 
   <script>
-    console.log("Test JS loaded");
+    function login() {
+      let user = document.getElementById("username").value;
+      let pass = document.getElementById("password").value;
+
+      // Weak logic (no validation)
+      document.getElementById("output").innerHTML =
+        "Logged in as: " + user;
+    }
+
+    function search() {
+      let query = document.getElementById("search").value;
+
+      // DOM-based injection simulation
+      document.getElementById("output").innerHTML =
+        "Results for: " + query;
+    }
+
+    function postComment() {
+      let comment = document.getElementById("comment").value;
+
+      // Unsafe rendering (XSS-prone)
+      document.getElementById("output").innerHTML =
+        "<b>User comment:</b> " + comment;
+    }
+
+    // URL parameter reflection (for scanners)
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("q")) {
+      document.getElementById("output").innerHTML =
+        "Query param: " + params.get("q");
+    }
   </script>
 </body>
 </html>
