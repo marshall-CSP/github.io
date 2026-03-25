@@ -1,10 +1,8 @@
 {
   "users": [
-    { "username": "admin", "role": "admin" },
-    { "username": "guest", "role": "user" }
+    { "username": "admin", "password": "admin123" },
+    { "username": "guest", "password": "guest123" }
   ],
-  "config": {
-    "debug": true,
-    "version": "1.0"
-  }
+  "apiKey": "SECRET-KEY-12345",
+  "debug": true
 }
